@@ -133,8 +133,11 @@ class Model
 	/**
 	* Envoyer une critique
 	*/
-	public function setCritiques($post,$filmId){
+	public function setCritiques($nom,$note,$commentaires,$filmId){
 
+	
+	
+	
 		$nom = "";
         $note = "";
         $commentaires = "";
@@ -153,13 +156,11 @@ class Model
     
         $sql =
 
-            "INSERT INTO critiques (nom,commentaire,note,film_id) VALUES ('".$nom."','".$commentaires."', '".$note."','".$filmId."')";
+           "INSERT INTO critiques (nom,commentaire,note,film_id) VALUES (:nom, :commentaire, :note, :filmId)";
         $req = $this->pdo->prepare($sql); 
 
-        $req->execute(array(
-            'nom' => $nom, 
-            'commentaire' => $commentaires,
-            'note' => $note,
+        $req->execute(array( 
+            'commentaires'
             'film_id' => $filmId
             ));
 

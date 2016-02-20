@@ -37,7 +37,12 @@ $app->match('/film/{id}', function($id) use ($app) {
     if ($request->getMethod() == 'POST') {
         $post = $request->request;
         if ($post->has('nom') && $post->has('note') && $post->has('critique')) {
-           $app['model']->setCritiques($post,$id);
+			$nom = html_escape($_POST['nom']);
+			if($note<6){
+				$note = html_escape($_POST['note']);
+			}
+			$commentaires = html_escape($_POST['commentaire']);
+           $app['model']->setCritiques($nom,$note,$commentaires,$id);
         }
     }
 
