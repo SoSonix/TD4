@@ -37,9 +37,18 @@ $app->match('/film/{id}', function($id) use ($app) {
     if ($request->getMethod() == 'POST') {
         $post = $request->request;
         if ($post->has('nom') && $post->has('note') && $post->has('critique')) {
-           $app['model']->setCritiques($post,$id);
-        }
-    }
+			$nom = html_escape($_POST['nom']);
+			if(is_numeric($_POST['note']){
+				$note = intval($_POST['note']);
+				if($note >= 0 && $note < 6) {
+				
+				   $commentaires = html_escape($_POST['commentaire']);
+				   $app['model']->setCritiques($nom,$note,$commentaires,$id);
+				}
+			}
+		}
+	}
+
 
     return $app['twig']->render('film.html.twig', array(
         'film' => $app['model']->getFilm($id),
