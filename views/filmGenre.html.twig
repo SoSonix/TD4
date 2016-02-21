@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+{% if genreFilm %}
+<h2>Films par genre : {{genreFilm.genre_nom}}</h2>
+<br/>
+
+<div class="fiche">
+    <img src="{{ genreFilm.image }}" />
+    <h2>{{ genreFilm.nom }} - Fiche film</h2>
+    <b>Genre: {{ genreFilm.genre_nom }}</b>
+    <p class="description">
+        {{ genreFilm.description }}
+    </p>
+    <span class="casting">
+    <br/>
+    <h2>Casting</h2>
+    {% for acteur in casting %}
+        <div class="acteur">
+            <img src="{{ acteur.image }}" width="64" />
+            <h3>{{ acteur.prenom }} {{ acteur.nom }}</h3>
+            <em>dans le role de</em>
+            <h3>{{ acteur.role }}</h3>
+        </div>
+    {% endfor %}
+</span>
+</div>
+
+{% else %}
+<h2>Fiche film</h2>
+
+Film non trouvé!
+{% endif %}
+
+
+{% endblock %}

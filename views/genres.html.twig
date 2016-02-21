@@ -5,7 +5,7 @@
 
 <ul>
 {% for genre in genres %}
-    <li>{{ genre.nom }} ({{ genre.nb_films}})</li>
+    <li><a href="{{ path('filmGenre',{id: genre.id}) }}">{{ 'genres.nom' }}" ({{ genres.nbFilms}})</li>
 {% endfor %}
 </ul>
 {% endblock %}
