@@ -32,16 +32,16 @@ $app->match('/films', function() use ($app) {
 })->bind('films');
 
 // Fiche film
+
 $app->match('/film/{id}', function($id) use ($app) {
     $request = $app['request'];
     if ($request->getMethod() == 'POST') {
         $post = $request->request;
         if ($post->has('nom') && $post->has('note') && $post->has('critique')) {
 			$nom = html_escape($_POST['nom']);
-			if(is_numeric($_POST['note']){
+			if(is_numeric($_POST['note'])){
 				$note = intval($_POST['note']);
 				if($note >= 0 && $note < 6) {
-				
 				   $commentaires = html_escape($_POST['commentaire']);
 				   $app['model']->setCritiques($nom,$note,$commentaires,$id);
 				}
@@ -57,11 +57,29 @@ $app->match('/film/{id}', function($id) use ($app) {
     ));
 })->bind('film');
 
+
 // Genres
-$app->match('/genres', function() use ($app) {
+$app->match('/genre', function() use ($app) {
     return $app['twig']->render('genres.html.twig', array(
         'genres' => $app['model']->getGenres()
     ));
 })->bind('genres');
+
+//Film par genres
+$app->match('/filmGenre/{id}', function($id) use ($app) {
+	 return $app['twig']->render('filmGenre.html.twig', array(
+        'filmGenre' => $app['model']->getFilmGenre($id),
+        'casting' => $app['model']->getCasting($id)
+    ));
+})->bind('filmGenre');
+
+
+//Top Film
+
+$app->match('/topFilm', function() use ($app) {
+    return $app['twig']->render('topFilm.html.twig', array(
+        'topFilm' => $app['model']->getTopfilm()
+    ));
+})->bind('topFilm');
 
 $app->run();
