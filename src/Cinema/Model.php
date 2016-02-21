@@ -133,61 +133,77 @@ class Model
 	/**
 	* Envoyer une critique
 	*/
-	public function setCritiques($post,$filmId){
+	public function setCritiques($nom,$note,$commentaires,$filmId){
 
-		$nom = "";
-        $note = "";
-        $commentaires = "";
-		
-		foreach ($post as $key => $value) {
-            if($key == 'nom'){
-                $nom = $value;
-            }
-            if($key == 'note'){
-                $note = $value;
-            }
-            if($key == 'critique'){
-                $commentaires = $value;
-            }            
-        }
+	
     
         $sql =
-
-            "INSERT INTO critiques (nom,commentaire,note,film_id) VALUES ('".$nom."','".$commentaires."', '".$note."','".$filmId."')";
+           "INSERT INTO critiques (nom,commentaire,note,film_id) VALUES (:nom, :commentaire, :note, :filmId)";
         $req = $this->pdo->prepare($sql); 
 
-        $req->execute(array(
-            'nom' => $nom, 
-            'commentaire' => $commentaires,
-            'note' => $note,
-            'film_id' => $filmId
+       $req->execute(array(
+            "nom" => $nom, 
+            "commentaires" => $commentaires,
+            "note" => $note,
+            "filmId" => $filmId
             ));
 
-        $data = $req->fetchAll();
+
 
 	}
 
-        /** 
-		$nom = "";
-        $note = "";
-        $critiques = "";   
+
+	/**
+	*Top Film
+	*/
+	
+	protected function getTopFilmSQL()
+	{
+		return
+			 'SELECT films.image, films.id, films.nom,(AVG(critiques.note)) as moy FROM films, critiques 
+			 WHERE critiques.film_id = films.id 
+			 GROUP BY films.nom ORDER BY moy';
+	}
+	
+	public function getTopFilm()
+	{
 		
-		$sql = $this->pdo->prepare("INSERT INTO critiques (nom,commentaires,note) VALUES ('".$nom."','".$critiques."','".$note."')");
-        }
-		*/
+		$sql = $this->getTopFilmSQL();
+		return $this->execute($this->pdo->prepare($sql));
+		
+	}
 
     /**
      * Genres
      */
-    public function getGenres()
-    {
-        $sql = 
-            'SELECT genres.nom, COUNT(*) as nb_films FROM genres '.
+	 protected function getGenresSQL()
+	 {
+		 return 
+		 'SELECT genres.nom, COUNT(*) as nb_films FROM genres '.
             'INNER JOIN films ON films.genre_id = genres.id '.
             'GROUP BY genres.id'
             ;
-
+	 }
+	 
+    public function getGenres()
+    {
+        $sql = $this->getGenresSQL();
         return $this->execute($this->pdo->prepare($sql));
     }
 	
+	/**
+	* Film par Genres
+	*/
+	
+	public function getFilmGenre($id)
+	{
+        $sql = $this->getFilmSQL().
+        'WHERE films.genre_id = ?'
+        ;
+
+        $query = $this->pdo->prepare($sql);
+        $this->execute($query, array($id));
+
+        return $this->fetchOne($query);
+	}
 }
