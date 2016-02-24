@@ -82,4 +82,22 @@ $app->match('/topFilm', function() use ($app) {
     ));
 })->bind('topFilm');
 
+//Ajout film
+
+$app->match('/ajoutFilm', function() use ($app) {
+    $request = $app['request'];
+    if ($request->getMethod() == 'POST') {
+        $post = $request->request;
+        if ($post->has('nom') && $post->has('description') && $post->has('annee') && $post->has('genre') && $post->has('image')){
+			$nom = htmlspecialchars($_POST['nom']);
+			$description = htmlspecialchars($_POST['description']);
+			$annee = htmlspecialchars($_POST['annee']);
+			$genre = htmlspecialchars($_POST['genre']);
+			$image = htmlspecialchars($_POST['image']);
+            $app['model']->addFilm($nom,$description,$annee,$genre,$image);
+        }
+    }
+    return $app['twig']->render('ajoutFilm.html.twig');
+})->bind('ajoutFilm');
+
 $app->run();

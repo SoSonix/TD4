@@ -175,19 +175,22 @@ class Model
 
     /**
      * Genres
-     */
+     
 	 protected function getGenresSQL()
 	 {
 		 return 
-		 'SELECT genres.nom, COUNT(*) as nb_films FROM genres '.
-            'INNER JOIN films ON films.genre_id = genres.id '.
-            'GROUP BY genres.id'
-            ;
+		 
 	 }
+	 */
 	 
     public function getGenres()
     {
-        $sql = $this->getGenresSQL();
+        $sql = 
+            'SELECT genres.nom,genres.id, COUNT(*) as nb_films FROM genres '.
+            'INNER JOIN films ON films.genre_id = genres.id '.
+            'GROUP BY genres.id'
+            ;
+			
         return $this->execute($this->pdo->prepare($sql));
     }
 	
@@ -206,4 +209,21 @@ class Model
 
         return $this->fetchOne($query);
 	}
+	
+	public function addFilm($nom,$description,$annee,$genre,$image){
+		
+		$sql =
+           "INSERT INTO films (nom,description,annee,genre,image) VALUES (:nom, :description, :annee, :genre, :image)";
+        $req = $this->pdo->prepare($sql); 
+
+       $req->execute(array(
+            "nom" => $nom, 
+            "description" => $description,
+            "annee" => $annee,
+            "genre" => $genre,
+			"image" => $image
+            ));
+			
+	}
+	
 }

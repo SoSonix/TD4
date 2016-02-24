@@ -2,16 +2,15 @@
 
 {% block content %}
 
-{% if genreFilm %}
-<h2>Films par genre : {{genreFilm.genre_nom}}</h2>
+{% if filmGenre %}
+<h2>Films par genre : {{filmGenre.genre_nom}}</h2>
 <br/>
-
 <div class="fiche">
-    <img src="{{ genreFilm.image }}" />
-    <h2>{{ genreFilm.nom }} - Fiche film</h2>
-    <b>Genre: {{ genreFilm.genre_nom }}</b>
+    <img src="{{ filmGenre.image }}" />
+    <h3>{{ filmGenre.nom }} - Fiche film</h3>
+    <b>Genre: {{ filmGenre.genre_nom }}</b>
     <p class="description">
-        {{ genreFilm.description }}
+        {{ filmGenre.description }}
     </p>
     <span class="casting">
     <br/>
@@ -26,12 +25,10 @@
     {% endfor %}
 </span>
 </div>
-
 {% else %}
 <h2>Fiche film</h2>
 
 Film non trouvé!
+
 {% endif %}
-
-
 {% endblock %}
