@@ -37,15 +37,14 @@ $app->match('/film/{id}', function($id) use ($app) {
     $request = $app['request'];
     if ($request->getMethod() == 'POST') {
         $post = $request->request;
-        if ($post->has('nom') && $post->has('note') && $post->has('critique')) {
-			$nom = html_escape($_POST['nom']);
-			if(is_numeric($_POST['note'])){
-				$note = intval($_POST['note']);
+        if ($post->has('nom') && $post->has('note') && $post->has('commentaire')) {
+			$nom = htmlspecialchars($_POST['nom']);
+			$note = htmlspecialchars($_POST['note']);
 				if($note >= 0 && $note < 6) {
-				   $commentaires = html_escape($_POST['commentaire']);
-				   $app['model']->setCritiques($nom,$note,$commentaires,$id);
+				   $commentaire = htmlspecialchars($_POST['commentaire']);
+				   $app['model']->setCritiques($nom,$note,$commentaire,$id);
 				}
-			}
+			
 		}
 	}
 
@@ -59,7 +58,7 @@ $app->match('/film/{id}', function($id) use ($app) {
 
 
 // Genres
-$app->match('/genre', function() use ($app) {
+$app->match('/genres', function() use ($app) {
     return $app['twig']->render('genres.html.twig', array(
         'genres' => $app['model']->getGenres()
     ));
@@ -88,16 +87,19 @@ $app->match('/ajoutFilm', function() use ($app) {
     $request = $app['request'];
     if ($request->getMethod() == 'POST') {
         $post = $request->request;
-        if ($post->has('nom') && $post->has('description') && $post->has('annee') && $post->has('genre') && $post->has('image')){
-			$nom = htmlspecialchars($_POST['nom']);
+        if ($post->has('nom') && $post->has('description') && $post->has('annee') && $post->has('genre_id') && $post->has('image')){
+			$nom = htmlspecialchars($_POST['description']);
 			$description = htmlspecialchars($_POST['description']);
 			$annee = htmlspecialchars($_POST['annee']);
-			$genre = htmlspecialchars($_POST['genre']);
+			$genre_id = htmlspecialchars($_POST['genre_id']);
 			$image = htmlspecialchars($_POST['image']);
-            $app['model']->addFilm($nom,$description,$annee,$genre,$image);
+            $app['model']->addFilm($nom,$description,$annee,$genre_id,$image);
+			
         }
     }
     return $app['twig']->render('ajoutFilm.html.twig');
 })->bind('ajoutFilm');
+
+
 
 $app->run();

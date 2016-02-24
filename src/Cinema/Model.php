@@ -94,13 +94,13 @@ class Model
             INNER JOIN films ON roles.film_id = films.id ';           
     }
 	 
-    public function getCasting($filmId)
+    public function getCasting($id)
     {
         $sql = $this->getCastingSQL().
 		'WHERE roles.film_id = :film_id'
             ;
 		$query = $this->pdo->prepare($sql);
-        $query->execute(array('film_id' => $filmId));
+        $query->execute(array('film_id' => $id));
 
         return $query;
     }
@@ -118,14 +118,14 @@ class Model
 		INNER JOIN films ON critiques.film_id = films.id '; 
 	}
 	
-	public function getCritiques($filmId)
+	public function getCritiques($id)
 	{
 		$sql = $this->getCritiquesSQL().
 		'WHERE critiques.film_id = :film_id'
 			;
 		
 		$query = $this->pdo->prepare($sql);
-		$query->execute(array('film_id' => $filmId));
+		$query->execute(array('film_id' => $id));
 		
 		return $query;
 	}
@@ -133,19 +133,19 @@ class Model
 	/**
 	* Envoyer une critique
 	*/
-	public function setCritiques($nom,$note,$commentaires,$filmId){
+	public function setCritiques($nom,$note,$commentaire,$id){
 
 	
     
         $sql =
-           "INSERT INTO critiques (nom,commentaire,note,film_id) VALUES (:nom, :commentaire, :note, :filmId)";
+           "INSERT INTO critiques (nom,commentaire,note,film_id) VALUES (:nom, :commentaire, :note, :id)";
         $req = $this->pdo->prepare($sql); 
 
        $req->execute(array(
             "nom" => $nom, 
-            "commentaires" => $commentaires,
+            "commentaire" => $commentaire,
             "note" => $note,
-            "filmId" => $filmId
+            "id" => $id
             ));
 
 
@@ -160,7 +160,7 @@ class Model
 	protected function getTopFilmSQL()
 	{
 		return
-			 'SELECT films.image, films.id, films.nom,(AVG(critiques.note)) as moy FROM films, critiques 
+			 'SELECT films.image, films.id, films.nom,ROUND(AVG(critiques.note), 1)as moy FROM films, critiques 
 			 WHERE critiques.film_id = films.id 
 			 GROUP BY films.nom ORDER BY moy';
 	}
@@ -210,17 +210,17 @@ class Model
         return $this->fetchOne($query);
 	}
 	
-	public function addFilm($nom,$description,$annee,$genre,$image){
+	public function addFilm($nom,$description,$annee,$genre_id,$image){
 		
 		$sql =
-           "INSERT INTO films (nom,description,annee,genre,image) VALUES (:nom, :description, :annee, :genre, :image)";
+           "INSERT INTO films (nom,description,annee,genre_id,image) VALUES (:nom, :description, :annee, :genre_id, :image)";
         $req = $this->pdo->prepare($sql); 
 
        $req->execute(array(
             "nom" => $nom, 
             "description" => $description,
             "annee" => $annee,
-            "genre" => $genre,
+            "genre_id" => $genre_id,
 			"image" => $image
             ));
 			
