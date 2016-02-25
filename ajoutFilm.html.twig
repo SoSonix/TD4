@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<div class="film">
+<h2>Veuillez remplir le formulaire ci dessous</h2><br/>
+	<form method="POST" />
+	Nom: <input type="text" name="nom" /><br />
+	Description: <textarea rows="5" name="description"></textarea><br/>    
+	Année: <input type="text" name="annee" /><br/>
+	Genre: <select  type="text" name="genre_id">
+						<option value="1">Science Fiction</option>
+						<option value="2">Thriller</option>
+						<option value="3">Comedie dramatique</option>
+						<option value="4">Action</option>
+					   </select></br>
+	URL de l'image : <input type="text" name="image" /></br>
+	<input type="submit" value="Envoyer" />
+	</form>
+</div>
+
+{% endblock %}
