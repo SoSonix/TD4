@@ -1,4 +1,13 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- phpMyAdmin SQL Dump
+-- version 4.1.14
+-- http://www.phpmyadmin.net
+--
+-- Client :  127.0.0.1
+-- Généré le :  Jeu 25 Février 2016 à 20:57
+-- Version du serveur :  5.6.17
+-- Version de PHP :  5.5.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -8,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `example`
+-- Base de données :  `cinema`
 --
 
 -- --------------------------------------------------------
@@ -54,7 +63,43 @@ CREATE TABLE IF NOT EXISTS `critiques` (
   `film_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `film_id` (`film_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Critiques des films' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Critiques des films' AUTO_INCREMENT=33 ;
+
+--
+-- Contenu de la table `critiques`
+--
+
+INSERT INTO `critiques` (`id`, `nom`, `commentaire`, `note`, `film_id`) VALUES
+(1, '', '', 0, 1),
+(2, '', '', 0, 1),
+(3, 'toto', '2', 0, 1),
+(4, 'toto', '2', 0, 1),
+(5, 'toto', '2', 0, 1),
+(6, 'toto', '2', 0, 1),
+(7, 'toto', '2', 0, 1),
+(8, 'toto', '2', 0, 1),
+(9, 'toto', '2', 0, 1),
+(10, 'tonpere', '4', 0, 1),
+(11, 'tonpere', '4', 0, 1),
+(12, 'tonpere', 'fff', 4, 1),
+(13, 'popo', 'mdmdm', 2, 1),
+(14, 'popo', 'mdmdm', 2, 1),
+(15, 'popo', 'mdmdm', 2, 1),
+(16, '', '', 0, 1),
+(17, '', '', 0, 1),
+(18, '', '', 0, 1),
+(19, '', '', 0, 1),
+(22, 'coco', 'coco', 5, 1),
+(23, 'toto', 'fd', 3, 1),
+(24, 'toto', 'fd', 3, 1),
+(25, 'toto', 'fd', 3, 1),
+(26, 'blublu', 'c''est sympa', 4, 2),
+(27, 'thierry le fripon', 'bof', 3, 3),
+(28, 'tyty', 'blo', 4, 2),
+(29, 'hu', 'ji', 2, 3),
+(30, 'popo', 'toto', 5, 6),
+(31, '', 'toto', 5, 6),
+(32, 'tutu', 'cooooool', 4, 6);
 
 -- --------------------------------------------------------
 
@@ -71,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `films` (
   `image` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `genre_id` (`genre_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Films' AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Films' AUTO_INCREMENT=10 ;
 
 --
 -- Contenu de la table `films`
@@ -83,7 +128,10 @@ INSERT INTO `films` (`id`, `annee`, `description`, `nom`, `genre_id`, `image`) V
 (3, '2001', 'Une nouvelle année scolaire commence pour Trevor McKinney, un garçon de douze ans, une année qui ne ressemblera à aucune autre et changera peut-être la vie de milliers d''hommes. Le jour de la rentrée, Trevor reçoit de la part de son professeur Eugene Simonet un sujet de devoir pour le moins inhabituel : trouver une solution pour rendre le monde meilleur et la mettre en pratique.\r\n\r\nPlus mûr, plus sensible que ses camarades, Trevor prend très au sérieux ce devoir. Il suggère d''aider de façon désintéressée trois personnes qui deviendront ses obligées, et chacune d''entre elles devra passer le relais à trois inconnus qui en feront de même à leur tour.\r\n\r\nOn ne peut pas changer le monde à douze ans, mais on peut tenter de redonner espoir à son entourage : une mère déboussolée, un professeur solitaire et un SDF sont des cobayes de rêve pour un garçon inventif, généreux, en manque d''affection. ', 'Un Monde meilleur', 3, 'http://images.allocine.fr/r_160_240/b_1_d6d6d6/medias/nmedia/00/00/00/85/69197222_af.jpg'),
 (4, '2001', 'Une légende du crime contraint cinq malfrats à aller s''acquitter d''une tâche très périlleuse. Ceux qui survivent pourront se partager un butin de 91 millions de dollars. ', 'Usual Suspects', 2, 'http://fr.web.img1.acsta.net/r_160_240/b_1_d6d6d6/medias/nmedia/00/02/29/04/69199504_af.jpg'),
 (5, '1995', 'John McClane est cette fois-ci aux prises avec un maître chanteur, facétieux et dangereux, qui dépose des bombes dans New York. ', 'Une journée en enfer', 4, 'http://images.allocine.fr/r_160_240/b_1_d6d6d6/medias/nmedia/18/36/04/16/18686568.jpg'),
-(6, '1994', 'L''odyssée sanglante et burlesque de petits malfrats dans la jungle de Hollywood à travers trois histoires qui s''entremêlent.', 'Pulp Fiction', 2, 'http://fr.web.img3.acsta.net/r_160_240/b_1_d6d6d6/medias/nmedia/18/36/02/52/18686501.jpg');
+(6, '1994', 'L''odyssée sanglante et burlesque de petits malfrats dans la jungle de Hollywood à travers trois histoires qui s''entremêlent.', 'Pulp Fiction', 2, 'http://fr.web.img3.acsta.net/r_160_240/b_1_d6d6d6/medias/nmedia/18/36/02/52/18686501.jpg'),
+(7, '2016', 'zer', 'popo', 1, 'fsf'),
+(8, '2016', 'zer', 'zer', 1, 'fsf'),
+(9, '2032', 'erter', 'erter', 1, 'ugi');
 
 -- --------------------------------------------------------
 
@@ -121,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`),
   KEY `acteur_id` (`acteur_id`,`film_id`),
   KEY `film_id` (`film_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Roles joués par les acteurs dans les films' AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Roles joués par les acteurs dans les films' AUTO_INCREMENT=16 ;
 
 --
 -- Contenu de la table `roles`
@@ -164,8 +212,8 @@ ALTER TABLE `films`
 -- Contraintes pour la table `roles`
 --
 ALTER TABLE `roles`
-  ADD CONSTRAINT `roles_ibfk_2` FOREIGN KEY (`film_id`) REFERENCES `films` (`id`),
-  ADD CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`acteur_id`) REFERENCES `acteurs` (`id`);
+  ADD CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`acteur_id`) REFERENCES `acteurs` (`id`),
+  ADD CONSTRAINT `roles_ibfk_2` FOREIGN KEY (`film_id`) REFERENCES `films` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
